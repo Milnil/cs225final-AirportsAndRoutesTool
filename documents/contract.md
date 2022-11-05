@@ -24,6 +24,9 @@ If any issue arises, the team will discuss the issue and reach either a compromi
 ## Signatures
 
 Milind Philar mphilar2
+
 Jessica Ho jmho3
+
 Joy Wan joywan2
+
 Ayush Basu ayushb3
