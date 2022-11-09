@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsrc.a CMakeFiles/src.dir/airportnodes.cpp.o
+/usr/bin/ranlib libsrc.a
