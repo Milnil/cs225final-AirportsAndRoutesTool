@@ -37,6 +37,7 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/workspaces/cs225/cs225final-nerds/src/*.cpp")
 set(OLD_GLOB
   "/workspaces/cs225/cs225final-nerds/src/airportnodes.cpp"
+  "/workspaces/cs225/cs225final-nerds/src/graph.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

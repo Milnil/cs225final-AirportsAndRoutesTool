@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <unordered_map>
 
 #include "airportnodes.h"
 
@@ -8,11 +9,14 @@ using namespace std;
 
 class Graph {
     public:
-    vector<AirportNode> allAirports(string airports_filename);
+    void allAirports(string airports_filename);
     void createGraph(string routes_filename);
 
-    private:
-    map<string, AirportNode> amap_;
+    // FOR TESTING
+    std::vector<AirportNode*> getAirports();
 
+
+    private:
+    unordered_map<int, AirportNode*> amap_;
 
 };
