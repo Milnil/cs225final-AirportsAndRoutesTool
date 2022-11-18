@@ -1,0 +1,5 @@
+add_test( addElements1 /workspaces/cs225/cs225final-nerds/build/test addElements1  )
+set_tests_properties( addElements1 PROPERTIES WORKING_DIRECTORY /workspaces/cs225/cs225final-nerds/build)
+add_test( [==[Airports File Parse]==] /workspaces/cs225/cs225final-nerds/build/test [==[Airports File Parse]==]  )
+set_tests_properties( [==[Airports File Parse]==] PROPERTIES WORKING_DIRECTORY /workspaces/cs225/cs225final-nerds/build)
+set( test_TESTS addElements1 [==[Airports File Parse]==])
