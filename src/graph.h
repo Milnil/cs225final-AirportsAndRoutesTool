@@ -11,6 +11,8 @@ class Graph {
     public:
     void allAirports(string airports_filename);
     void createGraph(string routes_filename);
+    int closestAirport(int id);
+
 
     // FOR TESTING
     std::vector<AirportNode*> getAirports();
