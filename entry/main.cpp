@@ -6,5 +6,7 @@ using namespace std;
 int main()
 {
     cout << "Waddup Howdie gg" << endl;
+    cout << "Waddup  gg" << endl;
+
     return 0;
 }
