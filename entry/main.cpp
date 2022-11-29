@@ -7,6 +7,6 @@ using namespace std;
 int main()
 {
     cout << "Waddup" << endl;
-    cout << "testing..." << endl;
+    cout << "testing main" << endl;
     return 0;
 }
