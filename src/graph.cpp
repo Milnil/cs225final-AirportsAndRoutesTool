@@ -64,10 +64,11 @@ void Graph::createGraph(string routes_filename) {
 int Graph::closestAirport(int id) {
     std::queue<int> q;
     std::unordered_set<int> visited;
-    int mindist = -1;
+    int mindist = INT32_MAX;
     double id_lat = amap_.at(id)->getLocation().first * M_PI / 180;
     double id_long = amap_.at(id)->getLocation().second * M_PI / 180;
     q.push(id);
+    int airport_id = -1;
     while(!q.empty()) {
         AirportNode* node = amap_.at(q.front());
         visited.insert(q.front());
@@ -78,17 +79,17 @@ int Graph::closestAirport(int id) {
         double dlon = id_long - node->getLocation().second * M_PI / 180;
         double step1 = sin(dlat/2) * sin(dlat/2) + cos(id_lat) * cos(node->getLocation().first * M_PI / 180) * sin(dlon/2) * sin(dlon/2);
         double step2 = abs(2 * asin(sqrt(step1)) * 3956);
-
-        if (step2 < mindist || mindist < 0) {
+        if (step2 < mindist && step2 != 0) {
             mindist = step2;
+            airport_id = node->getID();
         }
         for (auto a : node->getNeighbors()) {
-            if (visited.find(a) != visited.end()) {
+            if (visited.find(a) == visited.end()) {
                 q.push(a);
             }
         }
     }
-    return mindist;
+    return airport_id;
 } 
 
 // FOR TESTING
