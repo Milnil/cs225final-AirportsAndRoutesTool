@@ -6,6 +6,6 @@ using namespace std;
 
 int main()
 {
-    cout << "Waddup" << endl;
+    cout << "Waddup :3" << endl;
     return 0;
 }
