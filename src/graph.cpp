@@ -86,7 +86,7 @@ void Graph::allAirports(string airports_filename) {
 
             AirportNode *a = new AirportNode(stoi(row.at(0)), pair<double, double>(stod(row.at(6)), stod(row.at(7))), neighbors);
             amap_.insert(pair<int, AirportNode *>(stoi(row.at(0)), a));
-            visited_map_.insert(pair<int, bool>(stoi(row.at(0)), false));
+            visited_map_.insert(pair<int, int>(stoi(row.at(0)), false));
             vertices_++;
         }
     }
@@ -181,6 +181,43 @@ bool Graph::flightPathExists(int source_id, int dest_id)
     return false;
 }
 
+// NON TESTED DJIKSTRAS ALGO
+vector<AirportNode *> Graph::shortestPath(int source_id)
+{
+    // use bfs to confirm there is some path first
+    for (auto it = visited_map_.begin(); it != visited_map_.end(); it++)
+    {
+        it->second = INT32_MAX;
+    }
+
+    vector<bool> spanning(vertices_, false);
+
+    visited_map_[source_id] = 0;
+
+    for (auto it = amap_.begin(); it != amap_.end(); it++)
+    {
+        auto node = amap_.at(it->first);
+        auto neighbors = node->getNeighbors();
+        int min = INT32_MAX;
+        int closest_neighbor;
+        for (auto &neighbor : neighbors)
+        {
+            int neighbor_dist = getHaversineDistance(node->getID(), neighbor);
+            if (spanning[neighbor] == false && neighbor_dist < min)
+            {
+                min = neighbor_dist;
+                closest_neighbor = neighbor;
+            }
+        }
+        spanning[closest_neighbor] = true;
+        for (int v = 0; v < vertices_; v++)
+        {
+            if (spanning[v] == false && visited_map_[closest_neighbor] != INT32_MAX &&
+                visited_map_[closest_neighbor] + min < visited_map_[v])
+                visited_map_[v] = visited_map_[closest_neighbor] + min;
+        }
+    }
+}
 // FOR TESTING
 std::vector<AirportNode *> Graph::getAirports()
 {
