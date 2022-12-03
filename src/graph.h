@@ -11,14 +11,16 @@ class Graph {
     public:
     void allAirports(string airports_filename);
     void createGraph(string routes_filename);
-    int closestAirport(int id);
-
+    bool flightPathExists(int source_id, int dest_id);
+    double getHaversineDistance(int id1, int id2);
 
     // FOR TESTING
-    std::vector<AirportNode*> getAirports();
+    std::vector<AirportNode *> getAirports();
 
-
-    private:
+private:
     unordered_map<int, AirportNode*> amap_;
+    unordered_map<int, bool> visited_map_;
 
+    int vertices_;
+    int edges_;
 };

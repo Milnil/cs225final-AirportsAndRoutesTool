@@ -21,5 +21,4 @@ class AirportNode {
     int id_;
     pair<double, double> location_;
     unordered_set<int> neighbors_;
-
 };

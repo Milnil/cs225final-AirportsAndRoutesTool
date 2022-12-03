@@ -17,8 +17,8 @@ TEST_CASE("addElements1", "[weight=10][part1]")
 TEST_CASE("Airports File Parse and Storage", "[weight=10][part1]")
 {
 	Graph a;
-    
-    a.allAirports("/workspaces/cs225/cs225final-nerds/tests/airports1.txt");
+
+    a.allAirports("../tests/small_airports.csv");
     vector<AirportNode*> vect = a.getAirports();
     
     REQUIRE(vect.size() == 4);
@@ -29,15 +29,55 @@ TEST_CASE("Airports File Parse and Storage", "[weight=10][part1]")
     
 }
 
-TEST_CASE("Routes File Parse and Storage", "[weight=10][part1]")
+TEST_CASE("Medium Airports File Parse and Storage", "[weight=10][part1]")
 {
-	Graph* a = new Graph();
-    a->allAirports("/workspaces/cs225/cs225final-nerds/tests/airports1.txt");
-    a->createGraph("/workspaces/cs225/cs225final-nerds/tests/routes1.txt");
-    vector<AirportNode*> vect = a->getAirports();
-    
-    REQUIRE(a->closestAirport(507) == 8810);
+    Graph a;
 
-    
+    a.allAirports("../tests/med_airports.csv");
+    vector<AirportNode *> vect = a.getAirports();
+    REQUIRE(vect.size() == 148);
+    for (AirportNode *node : vect)
+    {
+        if (node->getID() == 149)
+            REQUIRE(node->getLocation() == pair<double, double>(48.20610046386719, -78.83560180664062));
+    }
 }
 
+TEST_CASE("Large Airports File Parse and Storage", "[weight=10][part1]")
+{
+    Graph a;
+
+    a.allAirports("../tests/large_airports.csv");
+    vector<AirportNode *> vect = a.getAirports();
+    REQUIRE(vect.size() == 7698);
+
+    for (AirportNode *node : vect)
+    {
+        if (node->getID() == 641)
+            REQUIRE(node->getLocation() == pair<double, double>(68.491302490234, 16.678100585938));
+    }
+}
+
+TEST_CASE("Small Routes File Parse and Storage", "[weight=10][part1]")
+{
+    Graph *a = new Graph();
+    a->allAirports("../tests/small_airports.csv");
+    a->createGraph("../tests/small_routes.csv");
+    vector<AirportNode *> vect = a->getAirports();
+
+    REQUIRE(a->flightPathExists(507, 8810) == true);
+}
+TEST_CASE("Large Routes File Parse and Storage", "[weight=10][part1]")
+{
+    Graph *a = new Graph();
+    a->allAirports("../tests/large_airports.csv");
+    cout << "here1" << endl;
+    a->createGraph("../tests/large_routes.csv");
+    cout << "here2" << endl;
+
+    vector<AirportNode *> vect = a->getAirports();
+    cout << "here3" << endl;
+    REQUIRE(a->flightPathExists(3830, 3484) == true);
+    cout << "here4" << endl;
+    REQUIRE(a->flightPathExists(4235, 3860) == false);
+}
