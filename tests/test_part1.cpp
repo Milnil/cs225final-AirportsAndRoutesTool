@@ -71,13 +71,23 @@ TEST_CASE("Large Routes File Parse and Storage", "[weight=10][part1]")
 {
     Graph *a = new Graph();
     a->allAirports("../tests/large_airports.csv");
-    cout << "here1" << endl;
     a->createGraph("../tests/large_routes.csv");
-    cout << "here2" << endl;
 
     vector<AirportNode *> vect = a->getAirports();
-    cout << "here3" << endl;
     REQUIRE(a->flightPathExists(3830, 3484) == true);
-    cout << "here4" << endl;
     REQUIRE(a->flightPathExists(4235, 3860) == false);
+}
+
+TEST_CASE("Shortest Route", "[weight=10][part1]")
+{
+    Graph *a = new Graph();
+    a->allAirports("../tests/large_airports.csv");
+    a->createGraph("../tests/large_routes.csv");
+
+    vector<AirportNode *> vect = a->getAirports();
+    REQUIRE(a->flightPathExists(3830, 3484) == true);
+    
+    for (auto a : a->shortestPath(3830, 3484)) {
+        cout << a << endl;
+    }
 }
