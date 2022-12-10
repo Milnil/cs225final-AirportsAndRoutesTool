@@ -67,6 +67,21 @@ TEST_CASE("Small Routes File Parse and Storage", "[weight=10][part1]")
 
     REQUIRE(a->flightPathExists(507, 8810) == true);
 }
+
+TEST_CASE("Strongly Connected Components", "[weight=10][part1]")
+{
+    Graph *a = new Graph();
+    a->allAirports("../tests/small_airports.csv");
+    a->createGraph("../tests/small_routes2.csv");
+
+    vector<AirportNode *> vect = a->getAirports();
+    
+    
+    for (auto a : a->getStronglyConnected(507)) {
+        std::cout << a << std::endl;
+    }
+}
+
 TEST_CASE("Large Routes File Parse and Storage", "[weight=10][part1]")
 {
     Graph *a = new Graph();
@@ -86,8 +101,9 @@ TEST_CASE("Shortest Route", "[weight=10][part1]")
 
     vector<AirportNode *> vect = a->getAirports();
     REQUIRE(a->flightPathExists(3830, 3484) == true);
+    REQUIRE(a->shortestPath(3830,3484)[1] == 3830);
+    REQUIRE(a->shortestPath(3830,3484)[0] == 3484);
     
-    for (auto a : a->shortestPath(3830, 3484)) {
-        cout << a << endl;
-    }
 }
+
+

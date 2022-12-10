@@ -2,6 +2,7 @@
 
 #include <map>
 #include <unordered_map>
+#include <stack>
 
 #include "airportnodes.h"
 
@@ -14,11 +15,18 @@ class Graph {
     bool flightPathExists(int source_id, int dest_id);
     vector<int> shortestPath(int source_id, int dest_id);
     double getHaversineDistance(int id1, int id2);
+    std::vector<int> getStronglyConnected(int id);
 
-    // FOR TESTING
+    //TESTING METHODS
     std::vector<AirportNode *> getAirports();
 
-private:
+    private:
+    void stronglyFormer(int id,
+     std::unordered_map<int, bool> &visited, std::vector<int> &ids,
+      unordered_map<int, unordered_set<int>> &bmap);
+    void stronglyHelper(int id, 
+    std::unordered_map<int, bool> &visited, stack<int> &stack);
+
     unordered_map<int, AirportNode *> amap_;
     unordered_map<int, bool> visited_map_;
     unordered_map<int, double> dist_map_;
