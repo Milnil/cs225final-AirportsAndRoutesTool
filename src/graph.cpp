@@ -7,6 +7,7 @@
 #include <limits.h>
 #include <limits>
 #include <float.h>
+#include <stack>
 
 
 /**
@@ -247,7 +248,6 @@ vector<int> Graph::shortestPath(int source_id, int dest_id)
             }
         }
     }
-    cout << "here3" << endl;
     
     int curr = parents[dest_id];
     vector<int> final_path;
@@ -259,6 +259,83 @@ vector<int> Graph::shortestPath(int source_id, int dest_id)
     }
     return final_path;
 }
+
+void Graph::stronglyFormer(int id, std::unordered_map<int, bool> &visited, std::vector<int> &ids, std::unordered_map<int, unordered_set<int>> &bmap) {
+    visited[id] = true;
+    ids.push_back(id);
+
+    for (auto node : bmap[id]) {
+        if (visited.find(node) == visited.end()) {
+            continue;
+        }
+        if(!visited[node]) {
+            stronglyFormer(node, visited, ids, bmap);
+        }
+    }
+}
+
+void Graph::stronglyHelper(int id, std::unordered_map<int, bool> &visited, stack<int> &stack) {
+    visited[id] = true;
+    for (auto neighbor : amap_[id]->getNeighbors()) {
+        if (visited.find(neighbor) == visited.end()) {
+            continue;
+        }
+        if(!visited[neighbor]) {
+            stronglyHelper(neighbor, visited, stack);
+        }
+    }
+    stack.push(id);
+}
+
+
+//Gets the strongly connected components on airport nodes graph given a node id using Kosaraju's Algorithm
+std::vector<int> Graph::getStronglyConnected(int id) {
+    stack<int> stack;
+    unordered_map<int, unordered_set<int>> bmap;
+    for (auto it = visited_map_.begin(); it != visited_map_.end(); it++)
+    {
+        it->second = false;
+    }
+
+    for (auto it = visited_map_.begin(); it != visited_map_.end(); it++)
+    {
+        if (it->second == false) {
+            stronglyHelper(it->first, visited_map_, stack);
+        }
+    }
+
+
+    for (auto it = amap_.begin(); it != amap_.end(); it++)
+    {
+        for (auto neighbor : it->second->getNeighbors()) {
+            if (bmap.find(neighbor) != bmap.end()) {
+                bmap[neighbor].insert(it->first);
+            } else {
+                bmap[neighbor] = unordered_set<int>({it->first});
+            }
+        }
+    }
+
+    for (auto it = visited_map_.begin(); it != visited_map_.end(); it++)
+    {
+        it->second = false;
+    }
+
+    while (!stack.empty()) {
+        int node = stack.top();
+        stack.pop();
+        std::vector<int> ids;
+        if (!visited_map_[node]) {
+            stronglyFormer(node, visited_map_, ids, bmap);
+        }
+        if (visited_map_[id]) { return ids; }
+    }
+
+    return std::vector<int>();
+
+}
+
+
 // FOR TESTING
 std::vector<AirportNode *> Graph::getAirports()
 {
