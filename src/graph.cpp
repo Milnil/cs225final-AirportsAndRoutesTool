@@ -4,6 +4,9 @@
 #include <iostream>
 #include <queue>
 #include <math.h>
+#include <limits.h>
+#include <limits>
+#include <float.h>
 
 
 /**
@@ -87,6 +90,7 @@ void Graph::allAirports(string airports_filename) {
             AirportNode *a = new AirportNode(stoi(row.at(0)), pair<double, double>(stod(row.at(6)), stod(row.at(7))), neighbors);
             amap_.insert(pair<int, AirportNode *>(stoi(row.at(0)), a));
             visited_map_.insert(pair<int, int>(stoi(row.at(0)), false));
+            dist_map_.insert(pair<int,double>(stoi(row.at(0)), 0));
             vertices_++;
         }
     }
@@ -145,6 +149,7 @@ bool Graph::flightPathExists(int source_id, int dest_id)
         it->second = false;
     }
 
+    
     std::queue<int> q;
 
     q.push(source_id);
@@ -182,41 +187,77 @@ bool Graph::flightPathExists(int source_id, int dest_id)
 }
 
 // NON TESTED DJIKSTRAS ALGO
-vector<AirportNode *> Graph::shortestPath(int source_id)
+vector<int> Graph::shortestPath(int source_id, int dest_id)
 {
     // use bfs to confirm there is some path first
+    if (!flightPathExists(source_id, dest_id)) {
+        return vector<int>();
+    }
+
     for (auto it = visited_map_.begin(); it != visited_map_.end(); it++)
     {
-        it->second = INT32_MAX;
+        it->second = false;
     }
 
-    vector<bool> spanning(vertices_, false);
-
-    visited_map_[source_id] = 0;
-
-    for (auto it = amap_.begin(); it != amap_.end(); it++)
+    for (auto it = dist_map_.begin(); it != dist_map_.end(); it++)
     {
-        auto node = amap_.at(it->first);
-        auto neighbors = node->getNeighbors();
-        int min = INT32_MAX;
-        int closest_neighbor;
-        for (auto &neighbor : neighbors)
+        it->second = std::numeric_limits<double>::max();
+    }
+
+
+    dist_map_[source_id] = 0;
+    unordered_map<int, int> parents;
+    parents.insert(pair<int,int>(source_id,-1));
+    
+
+
+    for (int i = 1; i < vertices_; i++) {
+        int nearest = -1;
+        double shortestDist = std::numeric_limits<double>::max();
+        for (auto it = dist_map_.begin(); it != dist_map_.end(); it++)
         {
-            int neighbor_dist = getHaversineDistance(node->getID(), neighbor);
-            if (spanning[neighbor] == false && neighbor_dist < min)
-            {
-                min = neighbor_dist;
-                closest_neighbor = neighbor;
+            
+            if (!visited_map_[it->first] && dist_map_[it->first] < shortestDist) {
+                nearest = it->first;
+                shortestDist = dist_map_[it->first];
             }
         }
-        spanning[closest_neighbor] = true;
-        for (int v = 0; v < vertices_; v++)
-        {
-            if (spanning[v] == false && visited_map_[closest_neighbor] != INT32_MAX &&
-                visited_map_[closest_neighbor] + min < visited_map_[v])
-                visited_map_[v] = visited_map_[closest_neighbor] + min;
+        visited_map_[nearest] = true;
+        std::unordered_set<int> neighbors;
+        if (amap_.find(nearest) != amap_.end()) {
+            for (int neighbor : amap_[nearest]->getNeighbors()) {
+                double dist = getHaversineDistance(nearest, neighbor);
+                if (dist == -1) {
+                    continue;
+                }
+                if (dist > 0 && ((shortestDist + dist) < dist_map_[neighbor])) {
+                    parents[neighbor] = nearest;
+                    dist_map_[neighbor] = shortestDist + dist;
+                }
+            }
+        }
+        for (int neighbor : neighbors) {
+            double dist = getHaversineDistance(nearest, neighbor);
+            if (dist == -1) {
+                continue;
+            }
+            if (dist > 0 && ((shortestDist + dist) < dist_map_[neighbor])) {
+                parents[neighbor] = nearest;
+                dist_map_[neighbor] = shortestDist + dist;
+            }
         }
     }
+    cout << "here3" << endl;
+    
+    int curr = parents[dest_id];
+    vector<int> final_path;
+    final_path.push_back(dest_id);
+    while (curr != -1) {
+        final_path.push_back(curr);
+        
+        curr = parents[curr];
+    }
+    return final_path;
 }
 // FOR TESTING
 std::vector<AirportNode *> Graph::getAirports()
@@ -230,6 +271,10 @@ std::vector<AirportNode *> Graph::getAirports()
 }
 double Graph::getHaversineDistance(int id1, int id2)
 {
+    if (amap_.find(id1) == amap_.end() || amap_.find(id2) == amap_.end()) {
+        return -1;
+    }
+
     AirportNode *node = amap_.at(id2);
     double id_lat = amap_.at(id1)->getLocation().first * M_PI / 180;
     double id_long = amap_.at(id1)->getLocation().second * M_PI / 180;
