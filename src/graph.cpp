@@ -94,6 +94,9 @@ void Graph::allAirports(string airports_filename) {
             dist_map_.insert(pair<int,double>(stoi(row.at(0)), 0));
             vertices_++;
         }
+    } else {
+        std::cout << "FILE COULD NOT BE OPENED" << std::endl;
+        exit(EXIT_FAILURE);
     }
 }
 /**
@@ -133,6 +136,9 @@ void Graph::createGraph(string routes_filename)
                 // cout << "Key is not in the map " << endl;
             }
         }
+    } else {
+        std::cout << "FILE COULD NOT BE OPENED" << std::endl;
+        exit(EXIT_FAILURE);
     }
     cout << "errorCount from createGraph: " << errorCount << endl;
 }
