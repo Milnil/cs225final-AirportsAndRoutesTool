@@ -2,8 +2,8 @@
 ### [Presentation Video](URL)
 ## Data
 We will be using the datasets on [OpenFlights](https://openflights.org/data.html). Specifically, we will be utilizing the airport dataset and route dataset in our project.
-* [OpenFlights Airport Nodes](https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat)
-* [OpenFlights Route Nodes](https://raw.githubusercontent.com/jpatokal/openflights/master/data/routes.dat)
+* [Airport Navigation Tool Nodes](https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat)
+* [Airport Naviation Tool Edges](https://raw.githubusercontent.com/jpatokal/openflights/master/data/routes.dat)
 
 ## Repo Structure
 ### Deliverables
@@ -14,6 +14,7 @@ We will be using the datasets on [OpenFlights](https://openflights.org/data.html
 ## Running Instructions
 Make sure you are running the program in Docker. If not, follow [this guide](https://courses.engr.illinois.edu/cs225/sp2022/resources/own-machine/) to get started.
 
+### Executable
 To use our Airport Navigation Tool, run the following in the root directory of the repository:
 ```
 mkdir build
@@ -22,23 +23,23 @@ cd build
 
 We call all functions in main for you. The required inputs for each of the functionality are as follows:
 
-### Executables
-* Dijkstra’s
-  * Input:
-  * Output:
-* BFS
-  * Input:
-  * Output:
-* Strongly Connected Components
-  * Input:
-  * Output:
+* Flight Path Exists (BFS)
+  * Input: two Integer IDs for the source airport and destination airport 
+  * Output: a boolean that states whether a path from the starting and ending airport exists
+* Shortest Path (Dijkstra's)
+  * Input: two Integer IDs for the source airport and destination airport 
+  * Output: the shortest path between the airport nodes represented as a vector of Integers
+* Strongly Connected Components (Kosaraju's)
+  * Input: an Integer ID for an airport
+  * Output: a list of airport IDs that have a path to input airport
 
+In addition to the above functions called in `/entry/main.cpp`, you can also refer to the input and output definitions in the comments for each small function in  `graph.h` and `/data`. 
 ### Tests
 To run the test cases, run `make test` then `./test` in the root directory.
 
-We constructed several small to medium sized datasets in `/tests` directory. What else did we test for?
+We constructed several small to medium sized datasets in `/data` directory.
 
-In addition to the above functions called in main, you can also refer to the input and output definitions in the comments for each small function in the `graph.h`.  
+ 
 
 ## Team
 *  Ayush Basu (` ayushb3 `)
