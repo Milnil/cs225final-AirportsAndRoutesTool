@@ -71,8 +71,12 @@ int main()
             if (!value.empty())
             {
                 cout << "The shortest route is through the following airport IDs: ";
+<<<<<<< HEAD
                 for (const auto val : value)
                 {
+=======
+                for (auto val : value) {
+>>>>>>> 6789fc0 (b4 pull)
                     cout << val << " ";
                 }
                 cout << endl;
@@ -93,8 +97,12 @@ int main()
             if (!value.empty())
             {
                 cout << "Here are the following strongly connected airports in the graph: ";
+<<<<<<< HEAD
                 for (const auto val : value)
                 {
+=======
+                for (auto val : value) {
+>>>>>>> 6789fc0 (b4 pull)
                     cout << val << " ";
                 }
                 cout << endl;
