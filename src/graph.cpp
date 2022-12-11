@@ -17,49 +17,6 @@
  * @param airports_filename Name of the file which contains the data on airports.
  */
 void Graph::allAirports(string airports_filename) {
-    // ifstream file;
-    // vector<string> row;
-    // string line, word;
-    // file.open(airports_filename);
-    // if (file.is_open()) {
-    //     while(getline(file, line)) {
-    //         row.clear();
-    //         stringstream str(line);
-    //         while (getline(str, word, ',')) {
-    //             row.push_back(word);
-    //         }
-    //         if (row.at(0).empty() || row.at(6).empty() || row.at(7).empty())
-    //         {
-    //             continue;
-    //         }
-    //         else
-    //         {
-    //             try
-    //             {
-    //                 AirportNode *a = new AirportNode(stoi(row.at(0)), pair<double, double>(stod(row.at(6)), stod(row.at(7))), unordered_set<int>());
-    //                 amap_.insert(pair<int, AirportNode *>(stoi(row.at(0)), a));
-    //             }
-    //             catch (const std::invalid_argument &)
-    //             {
-    //                 cout << "Argument is invalid\n";
-    //                 cout << row.at(6) << ',' << row.at(7) << endl;
-    //             }
-    //             catch (const std::out_of_range &)
-    //             {
-    //                 cout << "Argument is out of range for a double\n";
-    //             }
-    //             catch (exception &e)
-    //             {
-    //                 cout << "Standard exception: " << e.what() << endl;
-    //             }
-    //         }
-    //     }
-    // }
-    // else
-    // {
-    //     exit(EXIT_FAILURE);
-    // }
-
     std::ifstream reader(airports_filename);
     vector<string> row;
 
@@ -133,7 +90,7 @@ void Graph::createGraph(string routes_filename)
             catch (const std::out_of_range &)
             {
                 errorCount++;
-                // cout << "Key is not in the map " << endl;
+                
             }
         }
     } else {
@@ -185,7 +142,6 @@ bool Graph::flightPathExists(int source_id, int dest_id)
         catch (const std::out_of_range &)
         {
             errorCount++;
-            // cout << "Key is not in the map " << endl;
         }
     }
     cout << "errorCount from closestNeighbor: " << errorCount << endl;
@@ -193,7 +149,12 @@ bool Graph::flightPathExists(int source_id, int dest_id)
     return false;
 }
 
-// NON TESTED DJIKSTRAS ALGO
+/**
+ * Given a source node ID and a destination node ID, return the shortest path between the two nodes in a vector of airport IDs
+ *
+ * @param source_id ID of the airport that you are starting from.
+ * @param dest_id ID of the airport that you consider your destination.
+ */
 vector<int> Graph::shortestPath(int source_id, int dest_id)
 {
     // use bfs to confirm there is some path first
@@ -266,6 +227,12 @@ vector<int> Graph::shortestPath(int source_id, int dest_id)
     return final_path;
 }
 
+/**
+ * A helper method for the Strongly Connected Components Graph method that helps form the vector of components using the transpose of the original graph
+ * @param visited map of airport IDs to a boolean value declaring if they were visited or not
+ * @param ids Vector of airport IDs that are connected through strongly connected component
+ * @param bmap A Map that maps airport ids to an unordered set of airport ids that are the key's neighbors in the transpose
+ */
 void Graph::stronglyFormer(int id, std::unordered_map<int, bool> &visited, std::vector<int> &ids, std::unordered_map<int, unordered_set<int>> &bmap) {
     visited[id] = true;
     ids.push_back(id);
@@ -280,6 +247,12 @@ void Graph::stronglyFormer(int id, std::unordered_map<int, bool> &visited, std::
     }
 }
 
+/**
+ * A helper method for the Strongly Connected Components Graph method that helps create the stack of IDs through using DFS
+ * @param id ID of the airport to be checked
+ * @param visited map detailing whether a node has been visited or not
+ * @param stack stack of airport IDs that is being built
+ */
 void Graph::stronglyHelper(int id, std::unordered_map<int, bool> &visited, stack<int> &stack) {
     visited[id] = true;
     for (auto neighbor : amap_[id]->getNeighbors()) {
@@ -294,7 +267,11 @@ void Graph::stronglyHelper(int id, std::unordered_map<int, bool> &visited, stack
 }
 
 
-//Gets the strongly connected components on airport nodes graph given a node id using Kosaraju's Algorithm
+/**
+ * Gets the strongly connected components on airport nodes graph given a node id using Kosaraju's Algorithm
+ * @param id ID of the airport of which the function will return all nodes in its Strongly Connected Component Graph.
+ *
+ */
 std::vector<int> Graph::getStronglyConnected(int id) {
     stack<int> stack;
     unordered_map<int, unordered_set<int>> bmap;
@@ -337,12 +314,14 @@ std::vector<int> Graph::getStronglyConnected(int id) {
         if (visited_map_[id]) { return ids; }
     }
 
-    return std::vector<int>();
+    return std::vector<int>({id});
 
 }
 
 
-// FOR TESTING
+/**
+ * Returns all the airports in the map inside a vector
+ */
 std::vector<AirportNode *> Graph::getAirports()
 {
     std::vector<AirportNode *> a;
@@ -352,6 +331,12 @@ std::vector<AirportNode *> Graph::getAirports()
     }
     return a;
 }
+
+/**
+ * Calculates the Haversine distance between two airports using the coordinates
+ * @param id1 : first airport ID
+ * @param id2 : second airport ID
+ */
 double Graph::getHaversineDistance(int id1, int id2)
 {
     if (amap_.find(id1) == amap_.end() || amap_.find(id2) == amap_.end()) {
