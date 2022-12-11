@@ -12,8 +12,9 @@ int main()
     cout << "Enter the file_path to your data set of airports: ";
     string file_path;
     cin >> file_path;
-    if (file_path == "0") {
-        cout << "Bye Bye :)" <<  endl;
+    if (file_path == "0")
+    {
+        cout << "Bye Bye :)" << endl;
         return 0;
     }
     cout << endl;
@@ -21,22 +22,25 @@ int main()
     a.allAirports(file_path);
     cout << "Enter the file_path to your data set of routes: ";
     cin >> file_path;
-    if (file_path == "0") {
-        cout << "Bye Bye :)" <<  endl;
+    if (file_path == "0")
+    {
+        cout << "Bye Bye :)" << endl;
         return 0;
     }
     cout << endl;
     a.createGraph(file_path);
     string stop = "4";
-    while (stop != "0") {
-        
+    while (stop != "0")
+    {
+
         cout << "1: Flight Path Exists" << endl;
         cout << "2: Shortest Path" << endl;
         cout << "3: Get Strongly Connected" << endl;
         cout << "Input the number of the function you would like to use: ";
         cin >> stop;
         cout << endl;
-        if (stop == "1") {
+        if (stop == "1")
+        {
             string f;
             cout << "What's the ID of the source airport?" << endl;
             cin >> f;
@@ -45,13 +49,17 @@ int main()
             cin >> f;
             int id2 = stoi(f);
             bool value = a.flightPathExists(id1, id2);
-            if (value) {
+            if (value)
+            {
                 cout << "There is a route from source to destination" << endl;
-            } else {
-               cout << "There is no route from source to destination" << endl; 
             }
-            
-        } else if (stop == "2") {
+            else
+            {
+                cout << "There is no route from source to destination" << endl;
+            }
+        }
+        else if (stop == "2")
+        {
             string f;
             cout << "What's the ID of the source airport?" << endl;
             cin >> f;
@@ -60,43 +68,52 @@ int main()
             cin >> f;
             int id2 = stoi(f);
             vector<int> value = a.shortestPath(id1, id2);
-            if (!value.empty()) {
+            if (!value.empty())
+            {
                 cout << "The shortest route is through the following airport IDs: ";
-                for (auto a : value) {
-                    cout << a << " ";
+                for (const auto val : value)
+                {
+                    cout << val << " ";
                 }
                 cout << endl;
-            } else {
-               cout << "There is no route from source to destination" << endl; 
             }
-        } else if (stop == "3") {
+            else
+            {
+                cout << "There is no route from source to destination" << endl;
+            }
+        }
+        else if (stop == "3")
+        {
             string f;
             cout << "What's the ID of the airport?" << endl;
             cin >> f;
             int id1 = stoi(f);
 
             vector<int> value = a.getStronglyConnected(id1);
-            if (!value.empty()) {
+            if (!value.empty())
+            {
                 cout << "Here are the following strongly connected airports in the graph: ";
-                for (auto a : value) {
-                    cout << a << " ";
+                for (const auto val : value)
+                {
+                    cout << val << " ";
                 }
                 cout << endl;
-            } else {
-               cout << "This is not a valid airport ID" << endl; 
             }
-        } else if (stop == "0") {
-            cout << "Bye Bye :)" <<  endl;
+            else
+            {
+                cout << "This is not a valid airport ID" << endl;
+            }
+        }
+        else if (stop == "0")
+        {
+            cout << "Bye Bye :)" << endl;
             return 0;
-        } else {
+        }
+        else
+        {
             cout << "Sorry but I don't think your input is valid, how about you give it another shot?" << endl;
         }
     }
 
-    
-
-
-    
-  
     return 0;
 }
