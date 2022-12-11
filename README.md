@@ -1,7 +1,7 @@
 # CS225 Final Project: Airport Navigation Tool
 ### [Presentation Video](URL)
 ## Data
-We will be using the datasets on [OpenFlights](https://openflights.org/data.html). Specifically, we will be utilizing the airport dataset and route dataset in our project.
+We will be using datasets from [OpenFlights](https://openflights.org/data.html). Specifically, we will be utilizing the airport dataset and route dataset in our project.
 * [Airport Navigation Tool Nodes](https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat) (Airport ID, Location, Set of Neighbors)
 * [Airport Naviation Tool Edges](https://raw.githubusercontent.com/jpatokal/openflights/master/data/routes.dat)
 
