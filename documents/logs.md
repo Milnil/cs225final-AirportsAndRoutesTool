@@ -40,7 +40,7 @@ Make sure everyone understands the scope and objective of our project
 - Begin working on A start algorithm
 ## Optional: Questions for mentor
 
-# Development Log (Date: 11/14/22 -- 11/18/22)
+# Development Log #3 (Date: 11/14/22 -- 11/18/22)
 
 ## Weekly Goals
 Implement closest airport using BFS algorithm
@@ -61,7 +61,7 @@ Start working on presentation
 
 ## Optional: Questions for mentor
 
-# Development Log (Date: 11/28/22 -- 12/02/22)
+# Development Log #4 (Date: 11/28/22 -- 12/02/22)
 
 ## Weekly Goals
 Finish BFS algorithm (complete)
