@@ -8,7 +8,8 @@ We will be using datasets from [OpenFlights](https://openflights.org/data.html).
 ## Repo Structure
 ### Deliverables
 * All major files that contain our functions and classes are in the [src](https://github.com/Milnil/cs225final-nerds/tree/main/src) directory.
-* Datasets are stored as csv files in `/tests`
+* Datasets are stored as csv files in `/data`
+* Tests are in `/tests`
 * Project report, development log, contract, etc. are in `/documents`
 
 ## Running Instructions
