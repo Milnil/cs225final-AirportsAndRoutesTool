@@ -1,5 +1,5 @@
 # CS225 Final Project: Airport Navigation Tool
-### [Presentation Video](URL)
+### [Presentation Video](https://www.youtube.com/watch?v=F6Bg5zJc7rk)
 ## Data
 We will be using datasets from [OpenFlights](https://openflights.org/data.html). Specifically, we will be utilizing the airport dataset and route dataset in our project.
 * [Airport Navigation Tool Nodes](https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat) (Airport ID, Location, Set of Neighbors)
@@ -58,7 +58,7 @@ To run the test cases, run `make test` then `./test` in the root directory.
 We constructed a small, medium, and large size data set in our /data directory to be used in testing and which are available for the user to use when running the program. We used these data sets to test the functionality of our data parsing and storage method on datasets with incomplete data. We also tested the functionality of our Djikstra’s algorithm on finding the shortest path between airports, our BFS algorithm on finding if a path existed between airports, and our Strongly Connected Components algorithm on finding the set of strongly connected airport nodes. 
  
 
-## Team
+## Team (Nerds)
 *  Ayush Basu (` ayushb3 `)
 *  Jessica Ho (` jmho3 `)
 *  Milind Philar (` mphilar2 `)
