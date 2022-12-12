@@ -5,6 +5,8 @@ We will be using datasets from [OpenFlights](https://openflights.org/data.html).
 * [Airport Navigation Tool Nodes](https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat) (Airport ID, Location, Set of Neighbors)
 * [Airport Naviation Tool Edges](https://raw.githubusercontent.com/jpatokal/openflights/master/data/routes.dat)
 
+(We changed the file extensions to .csv in our exisiting files for ease of readability only)
+
 ## Repo Structure
 ### Deliverables
 * All major files that contain our functions and classes are in the [src](https://github.com/Milnil/cs225final-nerds/tree/main/src) directory.
