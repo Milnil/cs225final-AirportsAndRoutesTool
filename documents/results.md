@@ -1,7 +1,7 @@
 # CS225 Final Report
 ## Algorithm Overview
 
-### BFS
+### Breadth-First Search
 The breadth-first search algorithm is given both a source and destination Airport ID and returns whether or not there is a flight route between the two airports. The runtime of this function will be O(V+E) where V is the number of vertices and E is the number of edges.
 
 We confirmed the correctness of our algorithm by creating tests between airports that we could manually check if they had a route between them. Our tests also included cases for disconnected graphs and on faulty inputs to confirm that the algorithm would work on edge cases.
@@ -19,9 +19,8 @@ What's the ID of the source airport?
 What's the ID of the destination airport?
 3484
 There is a route from source to destination
-
-Checking with a ID that does not exist in the dataset
 ```
+Checking with a ID that does not exist in the dataset
 ```
 1: Flight Path Exists
 2: Shortest Path
