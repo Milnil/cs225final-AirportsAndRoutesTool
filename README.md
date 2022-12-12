@@ -9,10 +9,10 @@ We will be using datasets from [OpenFlights](https://openflights.org/data.html).
 
 ## Repo Structure
 ### Deliverables
-* All major files that contain our functions and classes are in the [src](https://github.com/Milnil/cs225final-nerds/tree/main/src) directory.
-* Datasets are stored as csv files in `/data`
-* Tests are in `/tests`
-* Project report, development log, contract, etc. are in `/documents`
+* All major files that contain our functions and classes are in the [`/src`](https://github.com/Milnil/cs225final-nerds/tree/main/src) directory.
+* Datasets are stored as csv files in [`/data`](https://github.com/Milnil/cs225final-nerds/tree/main/data)
+* Tests are in [`/tests`](https://github.com/Milnil/cs225final-nerds/tree/main/tests)
+* Project report, development log, contract, etc. are in [`/documents`](https://github.com/Milnil/cs225final-nerds/tree/main/documents)
 
 ## Running Instructions
 Make sure you are running the program in Docker. If not, follow [this guide](https://courses.engr.illinois.edu/cs225/sp2022/resources/own-machine/) to get started.
