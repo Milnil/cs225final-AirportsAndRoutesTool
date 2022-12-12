@@ -9,8 +9,8 @@
 #include <float.h>
 #include <stack>
 
-
-void Graph::allAirports(string airports_filename) {
+void Graph::allAirports(string airports_filename)
+{
     std::ifstream reader(airports_filename);
     vector<string> row;
 
@@ -19,20 +19,20 @@ void Graph::allAirports(string airports_filename) {
         string line;
         while (std::getline(reader, line))
         {
-            row.clear(); 
+            row.clear();
             int start = 0;
             int next = 0;
             bool inQuotes = false;
             for (unsigned i = 0; i < line.size(); i++)
             {
-                char ch = line[i]; 
-                if (ch == '"')   
+                char ch = line[i];
+                if (ch == '"')
                     inQuotes = !inQuotes;
                 else if (ch == ',' && !inQuotes)
                 {
-                    
+
                     row.push_back(line.substr(start, i - start));
-                    start = i + 1; 
+                    start = i + 1;
                 }
             }
             unordered_set<int> neighbors = unordered_set<int>();
@@ -41,10 +41,12 @@ void Graph::allAirports(string airports_filename) {
             AirportNode *a = new AirportNode(stoi(row.at(0)), pair<double, double>(stod(row.at(6)), stod(row.at(7))), neighbors);
             amap_.insert(pair<int, AirportNode *>(stoi(row.at(0)), a));
             visited_map_.insert(pair<int, int>(stoi(row.at(0)), false));
-            dist_map_.insert(pair<int,double>(stoi(row.at(0)), 0));
+            dist_map_.insert(pair<int, double>(stoi(row.at(0)), 0));
             vertices_++;
         }
-    } else {
+    }
+    else
+    {
         std::cout << "FILE COULD NOT BE OPENED" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -55,7 +57,6 @@ void Graph::createGraph(string routes_filename)
     fstream file(routes_filename, ios::in);
     vector<string> row;
     string line, word;
-    int errorCount = 0;
     if (file.is_open())
     {
         while (getline(file, line))
@@ -77,17 +78,16 @@ void Graph::createGraph(string routes_filename)
             }
             catch (const std::out_of_range &)
             {
-                errorCount++;
-                
+                continue;
             }
         }
-    } else {
+    }
+    else
+    {
         std::cout << "FILE COULD NOT BE OPENED" << std::endl;
         exit(EXIT_FAILURE);
     }
-    cout << "errorCount from createGraph: " << errorCount << endl;
 }
-
 
 bool Graph::flightPathExists(int source_id, int dest_id)
 {
@@ -97,11 +97,9 @@ bool Graph::flightPathExists(int source_id, int dest_id)
         it->second = false;
     }
 
-    
     std::queue<int> q;
 
     q.push(source_id);
-    int errorCount = 0;
     while (!q.empty())
     {
         try
@@ -125,18 +123,18 @@ bool Graph::flightPathExists(int source_id, int dest_id)
 
         catch (const std::out_of_range &)
         {
-            errorCount++;
+            q.pop();
+            continue;
         }
     }
-    cout << "errorCount from closestNeighbor: " << errorCount << endl;
 
     return false;
 }
 
-
 vector<int> Graph::shortestPath(int source_id, int dest_id)
 {
-    if (!flightPathExists(source_id, dest_id)) {
+    if (!flightPathExists(source_id, dest_id))
+    {
         return vector<int>();
     }
 
@@ -150,93 +148,105 @@ vector<int> Graph::shortestPath(int source_id, int dest_id)
         it->second = std::numeric_limits<double>::max();
     }
 
-
     dist_map_[source_id] = 0;
     unordered_map<int, int> parents;
-    parents.insert(pair<int,int>(source_id,-1));
-    
+    parents.insert(pair<int, int>(source_id, -1));
 
-
-    for (int i = 1; i < vertices_; i++) {
+    for (int i = 1; i < vertices_; i++)
+    {
         int nearest = -1;
         double shortestDist = std::numeric_limits<double>::max();
         for (auto it = dist_map_.begin(); it != dist_map_.end(); it++)
         {
-            
-            if (!visited_map_[it->first] && dist_map_[it->first] < shortestDist) {
+
+            if (!visited_map_[it->first] && dist_map_[it->first] < shortestDist)
+            {
                 nearest = it->first;
                 shortestDist = dist_map_[it->first];
             }
         }
         visited_map_[nearest] = true;
         std::unordered_set<int> neighbors;
-        if (amap_.find(nearest) != amap_.end()) {
-            for (int neighbor : amap_[nearest]->getNeighbors()) {
+        if (amap_.find(nearest) != amap_.end())
+        {
+            for (int neighbor : amap_[nearest]->getNeighbors())
+            {
                 double dist = getHaversineDistance(nearest, neighbor);
-                if (dist == -1) {
+                if (dist == -1)
+                {
                     continue;
                 }
-                if (dist > 0 && ((shortestDist + dist) < dist_map_[neighbor])) {
+                if (dist > 0 && ((shortestDist + dist) < dist_map_[neighbor]))
+                {
                     parents[neighbor] = nearest;
                     dist_map_[neighbor] = shortestDist + dist;
                 }
             }
         }
-        for (int neighbor : neighbors) {
+        for (int neighbor : neighbors)
+        {
             double dist = getHaversineDistance(nearest, neighbor);
-            if (dist == -1) {
+            if (dist == -1)
+            {
                 continue;
             }
-            if (dist > 0 && ((shortestDist + dist) < dist_map_[neighbor])) {
+            if (dist > 0 && ((shortestDist + dist) < dist_map_[neighbor]))
+            {
                 parents[neighbor] = nearest;
                 dist_map_[neighbor] = shortestDist + dist;
             }
         }
     }
-    
+
     int curr = parents[dest_id];
     vector<int> final_path;
     final_path.push_back(dest_id);
-    while (curr != -1) {
+    while (curr != -1)
+    {
         final_path.push_back(curr);
-        
+
         curr = parents[curr];
     }
     return final_path;
 }
 
-
-void Graph::stronglyFormer(int id, std::unordered_map<int, bool> &visited, std::vector<int> &ids, std::unordered_map<int, unordered_set<int>> &bmap) {
+void Graph::stronglyFormer(int id, std::unordered_map<int, bool> &visited, std::vector<int> &ids, std::unordered_map<int, unordered_set<int>> &bmap)
+{
     visited[id] = true;
     ids.push_back(id);
 
-    for (auto node : bmap[id]) {
-        if (visited.find(node) == visited.end()) {
+    for (auto node : bmap[id])
+    {
+        if (visited.find(node) == visited.end())
+        {
             continue;
         }
-        if(!visited[node]) {
+        if (!visited[node])
+        {
             stronglyFormer(node, visited, ids, bmap);
         }
     }
 }
 
-
-void Graph::stronglyHelper(int id, std::unordered_map<int, bool> &visited, stack<int> &stack) {
+void Graph::stronglyHelper(int id, std::unordered_map<int, bool> &visited, stack<int> &stack)
+{
     visited[id] = true;
-    for (auto neighbor : amap_[id]->getNeighbors()) {
-        if (visited.find(neighbor) == visited.end()) {
+    for (auto neighbor : amap_[id]->getNeighbors())
+    {
+        if (visited.find(neighbor) == visited.end())
+        {
             continue;
         }
-        if(!visited[neighbor]) {
+        if (!visited[neighbor])
+        {
             stronglyHelper(neighbor, visited, stack);
         }
     }
     stack.push(id);
 }
 
-
-
-std::vector<int> Graph::getStronglyConnected(int id) {
+std::vector<int> Graph::getStronglyConnected(int id)
+{
     stack<int> stack;
     unordered_map<int, unordered_set<int>> bmap;
     for (auto it = visited_map_.begin(); it != visited_map_.end(); it++)
@@ -246,18 +256,22 @@ std::vector<int> Graph::getStronglyConnected(int id) {
 
     for (auto it = visited_map_.begin(); it != visited_map_.end(); it++)
     {
-        if (it->second == false) {
+        if (it->second == false)
+        {
             stronglyHelper(it->first, visited_map_, stack);
         }
     }
 
-
     for (auto it = amap_.begin(); it != amap_.end(); it++)
     {
-        for (auto neighbor : it->second->getNeighbors()) {
-            if (bmap.find(neighbor) != bmap.end()) {
+        for (auto neighbor : it->second->getNeighbors())
+        {
+            if (bmap.find(neighbor) != bmap.end())
+            {
                 bmap[neighbor].insert(it->first);
-            } else {
+            }
+            else
+            {
                 bmap[neighbor] = unordered_set<int>({it->first});
             }
         }
@@ -268,21 +282,23 @@ std::vector<int> Graph::getStronglyConnected(int id) {
         it->second = false;
     }
 
-    while (!stack.empty()) {
+    while (!stack.empty())
+    {
         int node = stack.top();
         stack.pop();
         std::vector<int> ids;
-        if (!visited_map_[node]) {
+        if (!visited_map_[node])
+        {
             stronglyFormer(node, visited_map_, ids, bmap);
         }
-        if (visited_map_[id]) { return ids; }
+        if (visited_map_[id])
+        {
+            return ids;
+        }
     }
 
     return std::vector<int>({id});
-
 }
-
-
 
 std::vector<AirportNode *> Graph::getAirports()
 {
@@ -296,7 +312,8 @@ std::vector<AirportNode *> Graph::getAirports()
 
 double Graph::getHaversineDistance(int id1, int id2)
 {
-    if (amap_.find(id1) == amap_.end() || amap_.find(id2) == amap_.end()) {
+    if (amap_.find(id1) == amap_.end() || amap_.find(id2) == amap_.end())
+    {
         return -1;
     }
 
