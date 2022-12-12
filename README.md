@@ -38,7 +38,7 @@ We call all functions in main for you. The required inputs for each of the funct
   * Input: an Integer ID for an airport
   * Output: a list of airport IDs that have a path to input airport
 
-In addition to the above functions called in `/entry/main.cpp`, you can also refer to the input and output definitions in the comments for each small function in  `airportnodes.h`, `graph.h`, and `/data`. 
+In addition to the above functions called in `/entry/main.cpp`, you can also refer to the input and output definitions in the comments for each small function in  `airportnodes.h` and `graph.h`. 
 ### Tests
 To run the test cases, run `make test` then `./test` in the root directory.
 
