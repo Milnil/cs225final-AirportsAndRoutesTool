@@ -42,8 +42,7 @@ In addition to the above functions called in `/entry/main.cpp`, you can also ref
 ### Tests
 To run the test cases, run `make test` then `./test` in the root directory.
 
-We constructed several small to medium sized datasets in `/data` directory.
-
+We constructed a small, medium, and large size data set in our /data directory to be used in testing and which are available for the user to use when running the program. We used these data sets to test the functionality of our data parsing and storage method on datasets with incomplete data. We also tested the functionality of our Djikstra’s algorithm on finding the shortest path between airports, our BFS algorithm on finding if a path existed between airports, and our Strongly Connected Components algorithm on finding the set of strongly connected airport nodes. 
  
 
 ## Team
