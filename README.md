@@ -1,5 +1,5 @@
 # CS225 Final Project: Airport Navigation Tool
-### [Presentation Video](https://youtu.be/F6Bg5zJc7rk)
+### [Presentation Video](URL)
 ## Data
 We will be using datasets from [OpenFlights](https://openflights.org/data.html). Specifically, we will be utilizing the airport dataset and route dataset in our project.
 * [Airport Navigation Tool Nodes](https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat) (Airport ID, Location, Set of Neighbors)
@@ -20,7 +20,11 @@ To use our Airport Navigation Tool, run the following in the root directory of t
 ```
 mkdir build
 cd build
+cmake ..
+make
+./main
 ```
+Then follow the instructions in the terminal
 
 We call all functions in main for you. The required inputs for each of the functionality are as follows:
 
