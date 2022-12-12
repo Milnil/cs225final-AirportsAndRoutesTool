@@ -24,7 +24,20 @@ cmake ..
 make
 ./main
 ```
-Then follow the instructions in the terminal
+Then follow the instructions in the terminal.
+
+
+#### For example:
+For the first prompt, enter: `../data/large_airports.csv`
+
+
+For the second prompt, enter: `../data/large_routes.csv`
+
+
+For the third prompt, enter: `1`
+
+
+Your output should be: `There is a route from source to destination`
 
 We call all functions in main for you. The required inputs for each of the functionality are as follows:
 
